@@ -59,6 +59,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-rqt-gui \
     ros-$ROS_DISTRO-rqt-gui-py \
     ros-$ROS_DISTRO-rqt-py-common \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /
 RUN mkdir -p dev_ws/src
