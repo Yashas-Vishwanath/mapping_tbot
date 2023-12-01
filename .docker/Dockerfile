@@ -125,7 +125,7 @@ RUN ["/bin/bash", "-c", "git clone https://github.com/libuvc/libuvc.git &&\
 WORKDIR /dev_ws/src
 RUN ["/bin/bash", "-c", "git clone https://github.com/orbbec/ros_astra_camera.git"]
 
-FROM ka as open3d
+FROM astra as open3d
 
 RUN pip3 install --no-cache-dir --upgrade open3d
 
