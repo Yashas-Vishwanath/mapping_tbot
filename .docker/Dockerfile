@@ -114,6 +114,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y --no-install-recommends\
+    libgflags-dev \
+    ros-$ROS_DISTRO-image-geometry \
+    ros-$ROS_DISTRO-camera-info-manager \
+    ros-$ROS_DISTRO-image-transport \
+    ros-$ROS_DISTRO-image-publisher \
+    libgoogle-glog-dev \
+    libusb-1.0-0-dev \
+    libeigen3-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 RUN ["/bin/bash", "-c", "git clone https://github.com/libuvc/libuvc.git &&\
     cd libuvc &&\
     mkdir build && cd build &&\
@@ -121,9 +132,9 @@ RUN ["/bin/bash", "-c", "git clone https://github.com/libuvc/libuvc.git &&\
     sudo make install &&\
     sudo ldconfig"]
 
-
 WORKDIR /dev_ws/src
 RUN ["/bin/bash", "-c", "git clone https://github.com/orbbec/ros_astra_camera.git"]
+
 
 FROM astra as open3d
 
