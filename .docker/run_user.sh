@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -e "Starting up iaac_ur_commander container \n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo -e "Starting up tbot_mapping container \n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 echo -e "This container will access to the users home directory and log in as the user with their password and x sever access.\nYou will not own the workspace though, use sudo chown -R $USER /dev_ws"
 echo -e "Source the workspace with source devel/setup.bash"
 
@@ -19,4 +19,4 @@ docker run -it --privileged \
     --volume="/dev:/dev" \
     --net=host \
     --cap-add=sys_nice \
-    iaac_ur_commander:latest
+    tbot_mapping:latest
