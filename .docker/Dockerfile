@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     cmake \
     python3-pip \
     python3-flake8 \
+    python-is-python3 \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-cache-dir --upgrade pip\
