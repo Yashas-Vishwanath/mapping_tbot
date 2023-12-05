@@ -87,19 +87,18 @@ WORKDIR /dev_ws/src
 
 # RUN pip3 install --no-cache-dir --upgrade pyk4a
 
-# RUN apt-get update && apt-get install -y --no-install-recommends\
-#     ros-$ROS_DISTRO-image-geometry \
-#     ros-$ROS_DISTRO-compressed-image-transport \
-#     ros-$ROS_DISTRO-camera-info-manager \
-#     ros-$ROS_DISTRO-xacro \
-#     ros-$ROS_DISTRO-rgbd-launch \
-#     ros-$ROS_DISTRO-joint-state-publisher \
-#     ros-$ROS_DISTRO-robot-state-publisher \
-#     && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends\
+    ros-$ROS_DISTRO-image-geometry \
+    ros-$ROS_DISTRO-compressed-image-transport \
+    ros-$ROS_DISTRO-camera-info-manager \
+    ros-$ROS_DISTRO-xacro \
+    ros-$ROS_DISTRO-rgbd-launch \
+    ros-$ROS_DISTRO-joint-state-publisher \
+    ros-$ROS_DISTRO-robot-state-publisher \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # WORKDIR /dev_ws/src
 # RUN git clone https://github.com/microsoft/Azure_Kinect_ROS_Driver.git
-
 
 
 ## for Astra
