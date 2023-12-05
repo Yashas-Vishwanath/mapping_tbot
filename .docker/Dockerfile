@@ -10,7 +10,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TERM xterm-256color
 
 RUN apt-get update && apt-get install -y --no-install-recommends\
-    zsh \
     ssh \
     git \
     curl \
@@ -64,9 +63,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
 WORKDIR /
 RUN mkdir -p dev_ws/src
 WORKDIR /dev_ws/src
-
-# niceness permissions (for ur driver use without Prempt-RT)
-RUN echo "* - nice -15" >> /etc/security/limits.conf
 
 
 # FROM base as ka
@@ -137,13 +133,43 @@ RUN ["/bin/bash", "-c", "git clone https://github.com/libuvc/libuvc.git &&\
 WORKDIR /dev_ws/src
 RUN ["/bin/bash", "-c", "git clone https://github.com/orbbec/ros_astra_camera.git"]
 
+
+
 ## for TurtleBot
+FROM astra as tbot
+WORKDIR /
+RUN apt-get update && apt-get install -y --no-install-recommends\
+    ros-$ROS_DISTRO-rviz \
+    ros-$ROS_DISTRO-xacro \
+    ros-$ROS_DISTRO-rosbash \
+    ros-$ROS_DISTRO-rqt-action \
+    ros-$ROS_DISTRO-rqt-console \
+    ros-$ROS_DISTRO-rqt-graph \
+    ros-$ROS_DISTRO-rqt-topic \
+    ros-$ROS_DISTRO-rqt-tf-tree \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y --no-install-recommends\
+    ros-$ROS_DISTRO-joy \
+    ros-$ROS_DISTRO-openni2-launch \
+    ros-$ROS_DISTRO-gmapping \
+    ros-$ROS_DISTRO-slam-gmapping \
+    ros-$ROS_DISTRO-move-base \
+    ros-$ROS_DISTRO-amcl \
+    ros-$ROS_DISTRO-navigation \
+    ros-$ROS_DISTRO-map-server \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-## for Lidar
+# WORKDIR /dev_ws/src
+# git repos/packages installed in the workspace outside the docker
 
 
-FROM astra as open3d
+# ## for Lidar
+# git repos/packages installed in the workspace outside the docker
+
+
+FROM tbot as open3d
 
 RUN pip3 install --no-cache-dir --upgrade open3d
 
@@ -152,11 +178,18 @@ FROM open3d as build
 COPY . /dev_ws/src/
 
 WORKDIR /dev_ws
+
+# RUN rosdep init
+RUN apt-get update
+RUN rosdep update
+RUN rosdep install --from-paths src --ignore-src -r -y
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
 RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
     catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release &&\
     catkin build \
     "]
-
 
 FROM build as bash
 
@@ -165,14 +198,3 @@ RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.bash / && chmod 777 /
 ENTRYPOINT ["bash", "/entrypoint.bash" ]
 
 CMD ["bash"]
-
-FROM build as dev
-
-SHELL ["zsh", "chsh -s ~/.zshrc" ]
-
-RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/setup.zsh /dev_ws/setup.zsh && chmod 777 /dev_ws/setup.zsh"]
-RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.zsh / && chmod 777 /entrypoint.zsh"]
-
-ENTRYPOINT ["zsh", "/entrypoint.zsh" ]
-
-CMD ["zsh"]
