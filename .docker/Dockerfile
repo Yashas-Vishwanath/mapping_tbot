@@ -128,6 +128,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-amcl \
     ros-$ROS_DISTRO-navigation \
     ros-$ROS_DISTRO-map-server \
+    ros-$ROS_DISTRO-kobuki-driver \
+    ros-$ROS_DISTRO-kobuki-ftdi \
+    ros-$ROS_DISTRO-common-msgs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
