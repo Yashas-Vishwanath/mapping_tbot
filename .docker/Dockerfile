@@ -159,7 +159,7 @@ RUN pip3 install --no-cache-dir --upgrade open3d
 
 FROM open3d as build
 
-COPY . /dev_ws/src/
+COPY [captures]* /dev_ws/src/
 
 WORKDIR /dev_ws
 
