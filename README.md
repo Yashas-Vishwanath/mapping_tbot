@@ -18,7 +18,7 @@ To download without a GUI on the NUC, follow this link: https://docs.docker.com/
 NOTE: the latest deb package is a download file. So download into your laptop and copy into the NUC: \
 scp <path_to_folder_on_laptop> <path_to_folder_on_nuc> 
 
-Install ROS-noetic (desktop full install) and all its dependencies from here: https://wiki.ros.org/noetic/Installation/Ubuntu \
+Install ROS-noetic (desktop full install) and all its dependencies from here: https://wiki.ros.org/noetic/Installation/Ubuntu 
 
 Install extra ros tools on the laptop: \
 sudo apt install python3-catkin-tools python3-rosdep2 ros-noetic-rviz ros-noetic-rqt \
