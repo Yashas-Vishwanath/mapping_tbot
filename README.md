@@ -14,11 +14,11 @@ Install some general tools on both:
 git nano vim wget curl terminator htop
 
 Install Docker on the NUC and Laptop. Follow the instructions in the documentation. \
-To download without a GUI on the NUC, follow this link. \
+To download without a GUI on the NUC, follow this link: https://docs.docker.com/desktop/install/ubuntu/ \
 NOTE: the latest deb package is a download file. So download into your laptop and copy into the NUC: \
 scp <path_to_folder_on_laptop> <path_to_folder_on_nuc> 
 
-Install ROS-noetic (desktop full install) and all its dependencies from here.
+Install ROS-noetic (desktop full install) and all its dependencies from here: https://wiki.ros.org/noetic/Installation/Ubuntu \
 
 Install extra ros tools on the laptop: \
 sudo apt install python3-catkin-tools python3-rosdep2 ros-noetic-rviz ros-noetic-rqt \
